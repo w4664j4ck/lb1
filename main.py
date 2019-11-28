@@ -22,6 +22,13 @@ us_census['Native'] = us_census['Native'].str.extract(r'(.*)\%$', expand=False)
 us_census['Asian'] = us_census['Asian'].str.extract(r'(.*)\%$', expand=False)
 us_census['Pacific'] = us_census['Pacific'].str.extract(r'(.*)\%$', expand=False)
 
+us_census['Hispanic'] = pandas.to_numeric(us_census['Hispanic'])
+us_census['White'] = pandas.to_numeric(us_census['White'])
+us_census['Black'] = pandas.to_numeric(us_census['Black'])
+us_census['Native'] = pandas.to_numeric(us_census['Native'])
+us_census['Asian'] = pandas.to_numeric(us_census['Asian'])
+us_census['Pacific'] = pandas.to_numeric(us_census['Pacific'])
+
 us_census['Hispanic'].fillna(us_census['Hispanic'].mean())
 us_census['White'].fillna(us_census['White'].mean())
 us_census['Black'].fillna(us_census['Black'].mean())
@@ -31,6 +38,18 @@ us_census['Pacific'].fillna(us_census['Pacific'].mean())
 
 us_census.drop_duplicates()
 
+plt.hist(us_census['Hispanic'])
+plt.savefig('Hist1.png')
+plt.hist(us_census['White'])
+plt.savefig('Hist2.png')
+plt.hist(us_census['Black'])
+plt.savefig('Hist3.png')
+plt.hist(us_census['Native'])
+plt.savefig('Hist4.png')
+plt.hist(us_census['Asian'])
+plt.savefig('Hist5.png')
+plt.hist(us_census['Pacific'])
+plt.savefig('Hist6.png')
 
 
 extr = us_census['Income'].str.extract(r'^\$(.*)', expand=False)
@@ -40,6 +59,7 @@ us_census = pandas.DataFrame(us_census.GenderPop.str.split('_',1).tolist(), colu
 
 extr1 = us_census['Men'].str.extract(r'(.*)M$', expand=False)
 extr2 = us_census['Women'].str.extract(r'(.*)F$', expand=False)
+
 
 us_census['Men'] = pandas.to_numeric(extr1)
 us_census['Women'] = pandas.to_numeric(extr2)
